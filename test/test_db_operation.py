@@ -1,5 +1,9 @@
 """
 testing the basic operation of the databases
+
+all test methods must be methods of a class inheriting from unittest.TestCase
+with names beginning with test
+setUp and tearDown are special methods run before and after every test
 """
 
 import unittest
@@ -23,7 +27,7 @@ class DBAConnections(unittest.TestCase):
 
         drop_database(self.c, 'db_a')
 
-    def testInsert(self):
+    def test_insert(self):
 
         a = db_a.TableOne(col_a = 'Peter')
 
