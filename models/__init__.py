@@ -3,7 +3,6 @@ folder holds the various different sqlalchemy models for the project
 session connected to the various required engines created here
 """
 
-import importlib
 import logging
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
@@ -50,12 +49,13 @@ def make_session(config):
 def get_engine(config, db):
     """
     Get an engine for a db
-    :param conn_str: psycopg2 connection string for db
+    :param config: an instance of the Config class
+    :param db: the database to connected to
     """
 
-    LOGGER.debug(f"received call to get_engine for {db}")
+    LOGGER.debug("received call to get_engine for %s", db)
 
-    return create_engine(config.get_conn_str(db), echo=True)
+    return create_engine(config.get_conn_str(db), echo=False)
 
 
 def create_database(config, db):
@@ -65,13 +65,14 @@ def create_database(config, db):
     :param db: the database to be created
     """
 
-    LOGGER.debug(f"received call to create {db} database")
+    LOGGER.debug("received call to create %s database", db)
 
     e = get_engine(config, db)
 
     m = config.get_db_model(db)
 
     m.Base.metadata.create_all(e)
+
 
 def drop_database(config, db):
     """
@@ -80,13 +81,10 @@ def drop_database(config, db):
     :param db: the database to be dropped
     """
 
-    LOGGER.debug(f"received call to drop {db} tables")
+    LOGGER.debug("received call to drop %s tables", db)
 
     m = config.get_db_model(db)
 
     e = get_engine(config, db)
 
     m.Base.metadata.drop_all(e)
-
-
-
