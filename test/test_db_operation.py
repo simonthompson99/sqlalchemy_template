@@ -7,7 +7,7 @@ setUp and tearDown are special methods run before and after every test
 """
 
 import unittest
-from config import TestConfig
+from modules import config
 from models import create_database, drop_database, make_session, db_a
 
 class DBAConnections(unittest.TestCase):
@@ -15,7 +15,7 @@ class DBAConnections(unittest.TestCase):
 
     def setUp(self):
 
-        self.c = TestConfig()
+        self.c = config.TestConfig()
 
         create_database(self.c, 'db_a')
 

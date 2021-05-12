@@ -5,9 +5,8 @@ which provides a commandline structure to the functions.
 
 import logging
 import fire
-from config import Config
 from models import create_database
-from modules import log
+from modules import log, config
 
 LOGGER = logging.getLogger(__name__)
 
@@ -20,7 +19,7 @@ class Main():
 
             LOGGER.info('creating db_a')
 
-            c = Config()
+            c = config.Config()
 
             create_database(c, 'db_a')
 
